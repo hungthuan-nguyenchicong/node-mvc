@@ -28,4 +28,22 @@ npm install --save-dev nodemon
 
 "dev": "cd backend && nodemon server.js"
 
+## Install the Proxy Middleware
+npm install http-proxy-middleware --save-dev
+
+## Run Both Servers
+
+npm install concurrently --save-dev
+
+"scripts": {
+  "dev": "concurrently \"node server.js\" \"vite\""
+}
+
+## node-fetch
+
+npm install node-fetch --save-dev
+
+## vite
+
+npm install --save-dev vite@latest
 
