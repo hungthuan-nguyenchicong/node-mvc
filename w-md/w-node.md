@@ -22,3 +22,10 @@ npm install express
 
 ### Cài đặt nodemon làm dev dependency
 npm install --save-dev nodemon
+
+## add module es6
+"type": "module",
+
+"dev": "cd backend && nodemon server.js"
+
+
