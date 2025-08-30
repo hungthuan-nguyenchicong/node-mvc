@@ -1,0 +1,24 @@
+{
+  "name": "mvc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd backend node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hungthuan-nguyenchicong/node-mvc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hungthuan-nguyenchicong/node-mvc/issues"
+  },
+  "homepage": "https://github.com/hungthuan-nguyenchicong/node-mvc#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
