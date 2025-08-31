@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/hungthuan-nguyenchicong/node-mvc#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-form-data": "^3.0.1"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
