@@ -3,6 +3,7 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+//import proxy from 'express-http-proxy';
 
 const app = express();
 const port = 3000;
@@ -12,11 +13,12 @@ const port = 3000;
 const viteDevServerUrl = 'http://localhost:5173';
 
 // Route để xử lý tất cả các yêu cầu và proxy chúng tới Vite dev server.
-app.get(/^\/(.*)/, createProxyMiddleware({
-    target: viteDevServerUrl,
-    changeOrigin: true, // This is important for virtual hosting.
-    ws: true, // This is the key to proxying WebSocket connections.
-  }), async (req, res) => {
+// app.get(/^\/(.*)/, createProxyMiddleware({target: viteDevServerUrl}/* , {
+//     // Tùy chọn này chỉ thị cho node-http-proxy xử lý các kết nối WebSocket.
+//     ws: true // Tùy chọn quan trọng nhất để bật proxy WebSocket
+//   } */), async (req, res) => {
+app.get(/^\/(.*)/, createProxyMiddleware({target: viteDevServerUrl}), async (req, res) => {
+
   try {
     const vitePath = req.originalUrl;
     // Fetch toàn bộ nội dung từ Vite dev server

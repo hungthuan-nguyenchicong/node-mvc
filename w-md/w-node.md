@@ -17,6 +17,9 @@ nvm use 18.17.1
 ## cài đặt project
 npm init -y
 
+## update
+npm update
+
 ### Cài đặt Express
 npm install express
 
@@ -30,6 +33,9 @@ npm install --save-dev nodemon
 
 ## Install the Proxy Middleware
 npm install http-proxy-middleware --save-dev
+
+## gở bỏ
+npm uninstall webpack
 
 ## Run Both Servers
 
