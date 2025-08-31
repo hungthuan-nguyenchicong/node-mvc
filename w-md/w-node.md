@@ -31,6 +31,9 @@ npm install --save-dev nodemon
 
 "dev": "cd backend && nodemon server.js"
 
+## template
+npm i vite-plugin-html-template --save-dev
+
 ## Install the Proxy Middleware
 npm install http-proxy-middleware --save-dev
 

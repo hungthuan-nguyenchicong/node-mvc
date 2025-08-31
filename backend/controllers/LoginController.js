@@ -6,10 +6,16 @@ class LoginController {
         this.req = req;
     }
 
-    login() {
-        const formData = this.req.body;
-        console.log(formData);
-        return this.res.json({mess:formData});
+    async login() {
+        try {
+            const formData = this.req.body;
+            console.log(formData);
+            return this.res.json({mess:formData});
+
+        } catch (e) {
+            console.error(e);
+            
+        }
     }
 };
 
