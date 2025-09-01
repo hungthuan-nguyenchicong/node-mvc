@@ -9,19 +9,31 @@ class LoginController {
 
     async login() {
         const formData = this.req.body;
-        const username = formData.username;
-        const password = formData.password;
+        const { username, password } = formData;
         try {
-            //console.log(password);
             const response = this.loginModelInstance.validate(username, password)
             if (response) {
-                this.req.session.isLoggedIn = true;
-                return this.res.status(201).json({success: 201});
+                this.req.session.regenerate((err) => {
+                    if (err) {
+                      console.error('Session regenerate error:', err);
+                      return this.res.status(500).json({ error: 'Internal Server Error' });
+                    }
+                    this.req.session.user = username;
+
+                    this.req.session.save((err) => {
+                        if (err) {
+                           console.error('Session save error:', err);
+                           return this.res.status(500).json({ error: 'Internal Server Error' });
+                        }
+                        return this.res.status(201).json({success: 201});
+                    });
+                });
+            } else {
+              return this.res.status(401).json({error: 401});
             }
-            return this.res.status(401).json({error: 401});
         } catch (e) {
-            console.error(e);
-            return this.req.status(500).json({error: e});
+            console.error('Login error:', e);
+            return this.res.status(500).json({error: e.message});
         }
     }
 };

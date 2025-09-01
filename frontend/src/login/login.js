@@ -14,14 +14,28 @@ function login() {
 
 async function requestServer(form) {
     const formData = new FormData(form);
+    try {
+        const response = await fetch('/auth/login', {
+            method: "POST",
+            body: formData,
+        });
+    
+        const result = await response.json();
+        //console.log(result);
+        if (result.success) {
+            form.reset();
+            return window.location = '/admin/';
+        }
 
-    const response = await fetch('/auth/login', {
-        method: "POST",
-        body: formData,
-    });
+        if (result.error) {
+            const errorMessage = form.querySelector('.error-message');
+            return errorMessage.innerHTML = 'Tài khoản hoặc mật khấu không đúng';
+        }
 
-    const result = await response.json();
-    console.log(result);
+    } catch (e) {
+        console.log(e);
+    }
+
 }
 
 export {login}

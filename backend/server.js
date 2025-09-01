@@ -50,6 +50,20 @@ if (app.get('env') === 'production') {
 app.use(session(sess));
 //console.log(sess)
 
+// middleware to test if authenticated
+function isAuthenticated (req, res, next) {
+  if (req.session.user) {
+    next()
+  } else {
+    res.redirect('/login/');
+  }
+  
+}
+
+// static file
+// middleware này sẽ xử lý các request tới /admin/ và các file bên trong
+//app.use('/admin', isAuthenticated, express.static(path.resolve(process.cwd(), '..', 'admin')));
+
 // run express
 app.get('/', (req, res) => {
     res.send('/ pathname');
@@ -58,13 +72,14 @@ app.get('/', (req, res) => {
 // login -> post auth/login
 app.post('/auth/login', (req, res) => {
     const loginControllerInstance = new LoginController(req, res);
-    loginControllerInstance.isAuthenticated();
+    loginControllerInstance.login();
 });
 
 // admin/.*
-app.all(/^\/admin\/.*/, (req, res, next) => {
+app.all(/^\/admin\/.*/ , (req, res, next) => {
     const adminControllerInstance = new AdminController(req, res, next);
-    adminControllerInstance.admin();
+    adminControllerInstance.isAuthenticated();
+    // console.log(path.resolve(process.cwd(), '..', 'dist/admin'))
 });
 
 app.listen(port, host, () => {
