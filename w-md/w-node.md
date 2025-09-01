@@ -31,6 +31,43 @@ npm install --save-dev nodemon
 
 "dev": "cd backend && nodemon server.js"
 
+## npm install dotenv
+npm install dotenv
+
+## run env
+"dev": "concurrently \"cd backend && NODE_ENV=development nodemon server.js\" \"vite\""
+
+"start": "NODE_ENV=production node server.js"
+
+// server.js
+if (process.env.NODE_ENV === 'production') {
+  require('dotenv').config();
+}
+// ... code của bạn
+
+### // dev.env built.env start.env
+// process.env.npm_lifecycle_event -> dev pro test
+const envFile = path.resolve(process.cwd(), '../', process.env.npm_lifecycle_event + '.env' );
+// load .env
+if (process.env.npm_lifecycle_event === 'dev' || process.env.npm_lifecycle_event === 'build') {
+    dotenv.config({ path: envFile});
+}
+
+## package.json
+"scripts": {
+  "dev": "NODE_ENV=development nodemon server.js",
+  "start": "NODE_ENV=production node server.js"
+}
+
+"scripts": {
+  "dev": "NODE_ENV=development PORT=3000 nodemon server.js",
+  "start": "NODE_ENV=production PORT=8080 node server.js",
+  "test": "NODE_ENV=test PORT=5000 node server.js"
+}
+
+    "dev": "concurrently \"cd backend && nodemon server.js\" \"vite\""
+
+
 ## template
 npm i vite-plugin-html-template --save-dev
 
