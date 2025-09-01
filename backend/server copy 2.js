@@ -11,8 +11,6 @@ import { createServer } from 'vite';
 
 // login
 import { LoginController } from './controllers/LoginController.js';
-// admin -> all /admin/.*
-import { AdminController } from './controllers/AdminController.js';
 
 const app = express();
 const port = 3000;
@@ -50,11 +48,9 @@ app.post('/auth/login', (req, res) => {
     loginControllerInstance.login();
 });
 app.all(/^\/admin\/.*/, (req, res) => {
-    // console.log(req.path);
-    // console.log(req.method);
-    // res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-    const adminControllerInstance = new AdminController(req, res);
-    adminControllerInstance.admin();
+    console.log(req.path);
+    console.log(req.method);
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 // 4. Fallback for static assets in production
