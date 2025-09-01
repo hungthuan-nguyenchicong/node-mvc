@@ -1,3 +1,5 @@
 /node_modules
 .env
 dev.env
+build.env
+test.env

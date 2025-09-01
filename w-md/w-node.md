@@ -52,7 +52,8 @@ const envFile = path.resolve(process.cwd(), '../', process.env.npm_lifecycle_eve
 if (process.env.npm_lifecycle_event === 'dev' || process.env.npm_lifecycle_event === 'build') {
     dotenv.config({ path: envFile});
 }
-
+### process.env.NODE_ENV
+console.log(app.get('env'))
 ## package.json
 "scripts": {
   "dev": "NODE_ENV=development nodemon server.js",

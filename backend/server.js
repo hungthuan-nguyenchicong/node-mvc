@@ -1,134 +1,74 @@
 // backend/server.js
-// Luôn import dotenv và khởi tạo ngay đầu file
-import dotenv from 'dotenv';
-import path from 'path';
-//dotenv.config({ path: '../.env' })
 
 import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
 import formData from 'express-form-data';
 import session from 'express-session';
 
-
-// dev
-
-import { fileURLToPath } from 'url';
-
-// dev
-import { createServer } from 'vite';
-
-
-// login
+// load controller
 import { LoginController } from './controllers/LoginController.js';
-// admin -> all /admin/.*
+// admin controller
 import { AdminController } from './controllers/AdminController.js';
 
-// .env
-//console.log(path.join(process.cwd(), '../.env'));
-
-// process.env.npm_lifecycle_event -> dev pro test
+// process.env.npm_lifecycle_event -> dev build start
 const envFile = path.resolve(process.cwd(), '../', process.env.npm_lifecycle_event + '.env');
-// load .env
-if (process.env.npm_lifecycle_event === 'dev' || process.env.npm_lifecycle_event === 'build') {
-    dotenv.config({ path: envFile });
+if (process.env.npm_lifecycle_event === 'dev' || process.env.npm_lifecycle_event === 'test') {
+    dotenv.config({ path: envFile})
 }
-console.log(envFile)
 
-// dotenv.config({ path: '../.env' });
-//dotenv.config({ path: envFile});
-
-console.log(process.env.npm_lifecycle_event)
-if (process.env.NODE_ENV === 'development') {
-    //dotenv.config({ path: '../.env' })
-    console.log(process.env.secret)
-}
-// Bây giờ các biến môi trường đã có sẵn
-const secretSession = process.env.secret || 'my-super-secret-key';
-const port = process.env.PORT || 3000;
-
-console.log('Secret Session:', secretSession);
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('Port:', port);
-
+// express
 const app = express();
-//const port = 3000;
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || 'localhost';
+const secret = process.env.SECRET || 'keyboard cat';
 
-// .env
-// const secretSession = 'my-super-secret-key'; // Khóa bí mật để ký session ID
-// if (process.env.NODE_ENV === 'development') {
-//     secretSession = process.env.secret;
-// }
+// get env
+//console.log(process.env.NODE_ENV)
+//console.log(app.get('env'))
 
-console.log(secretSession);
-console.log(process.env.NODE_ENV)
-
-// .env
-// const secretSession = 'my-super-secret-key'; // Khóa bí mật để ký session ID
-// if (import.meta.env.NODE_ENV === 'production') {
-//     secretSession = import.meta.env.VITE_SECRET;
-// }
-
-// console.log(secretSession)
-// session express
-// app.use(session({
-
-// }));
-
-// path->file->server.js
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// pathname
-// const url = new URL(import.meta.url);
-// const pathname = window.location.href;
-
-//console.log(pathname)
-
-// Correct order: 
-// 1. Vite middleware for development
-if (import.meta.hot && import.meta.hot.env.NODE_ENV === 'develop') {
-    let vite = await createServer({
-        server: { middlewareMode: true },
-        appType: 'custom',
-    });
-    app.use(vite.middlewares);
-}
-
-// Kiểm tra môi trường để chạy Vite dev server
-if (process.env.NODE_ENV === 'development') {
-    const { createServer } = await import('vite');
-    const vite = await createServer({
-        server: { middlewareMode: true },
-        appType: 'custom',
-    });
-    app.use(vite.middlewares);
-} else {
-    // Phục vụ file tĩnh khi built
-    app.use(express.static('dist'));
-}
-
-// 2. Request body parsers and other middleware
+// load formData
+// parse data with connect-multiparty. -->> remove options
 app.use(formData.parse());
 
-// 3. Your API routes
+// express-session
+const sess = {
+    secret: secret, // Khóa bí mật để ký session ID
+    resave: false, // Không lưu lại session nếu không có thay đổi
+    saveUninitialized: true, // Lưu session mới chưa được khởi tạo
+    cookie: {
+        httpOnly: true, // Ngăn JS client truy cập cookie
+        maxAge: 1000 * 60 * 60 * 24 // Thời gian sống của session (24h)
+    }
+}
+
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1);
+    sess.cookie.secure = true; // Đặt là true nếu dùng HTTPS
+}
+
+app.use(session(sess));
+//console.log(sess)
+
+// run express
 app.get('/', (req, res) => {
-    res.send('hello /');
+    res.send('/ pathname');
 });
+
+// login -> post auth/login
 app.post('/auth/login', (req, res) => {
     const loginControllerInstance = new LoginController(req, res);
-    loginControllerInstance.login();
+    loginControllerInstance.isAuthenticated();
 });
-app.all(/^\/admin\/.*/, (req, res) => {
-    // console.log(req.path);
-    // console.log(req.method);
-    // res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-    const adminControllerInstance = new AdminController(req, res);
+
+// admin/.*
+app.all(/^\/admin\/.*/, (req, res, next) => {
+    const adminControllerInstance = new AdminController(req, res, next);
     adminControllerInstance.admin();
 });
 
-// 4. Fallback for static assets in production
-app.use(express.static('dist'));
+app.listen(port, host, () => {
+    console.log(`express đang chạy tại:  http://${host}:${port}`);
+})
 
-app.listen(port, () => {
-    console.log(`Server Express đang chạy tại http://localhost:${port}`);
-});
+//console.log(process.env.HOST)
