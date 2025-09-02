@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <title>Login</title>
+    <style>
+        form {
+            display: grid;
+            width: 50%;
+            text-align: center;
+            margin: 100px auto;
+
+        }
+        
+        input {
+            font-size: larger;
+        }
+
+        button {
+            font-size: larger;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form id="login">
+        <h1>Login</h1>
+        <input type="text" name="username" placeholder="User Name" autocomplete="username"><br>
+        <input type="password" name="password" placeholder="password" autocomplete="new-password"><br>
+        <button type="submit">Login</button><br>
+        <div class="error-message"></div>
+    </form>
+    <script type="module" src="./mainLogin.js"></script>
+</body>
+</html>
