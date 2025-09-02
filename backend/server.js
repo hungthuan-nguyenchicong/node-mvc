@@ -2,6 +2,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import express from 'express';
+import formData from 'express-form-data';
 
 
 //login 
@@ -27,6 +28,9 @@ if (runEvent === 'dev' || runEvent === 'start') {
 const app = express();
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || 'localhost';
+
+// formData
+app.use(formData.parse());
 
 app.get('/', (req, res) => {
     res.send('/ pathname /');

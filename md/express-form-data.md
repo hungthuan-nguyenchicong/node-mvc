@@ -1,6 +1,6 @@
 # express-form-data
 
-npm -i express-form-data
+npm i express-form-data
 
 import formData from 'express-form-data';
 
