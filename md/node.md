@@ -1,4 +1,5 @@
-# node-mvc
+# init
+
 rm -rf node_modules
 
 npm init -y
@@ -7,6 +8,6 @@ npm install
 
 "type": "module"
 
-# .gitignore
-/node_modules
-.env*
+# npm i dotenv
+
+npm i dotenv
