@@ -14,7 +14,7 @@ import { ExpressFormData } from './core/ExpressFormData.js';
 import { ExpressSession } from './core/ExpressSession.js';
 
 //login 
-import { LoginController } from './controllers/LoginController.js';
+//import { LoginController } from './controllers/LoginController.js';
 
 // check auth
 import { AuthMiddleware } from './core/AuthMiddleware.js';
@@ -73,7 +73,7 @@ new ExpressSession(app);
 // app.use(session(sess));
 
 // check auth
-const authMiddlewareInstance = new AuthMiddleware(app);
+new AuthMiddleware(app);
 
 
 app.get('/', (req, res) => {
@@ -90,10 +90,10 @@ app.get('/', (req, res) => {
 //     res.status(201).json({authCheck: true});
 // });
 
-app.get('/auth-logout/', (req, res) => {
-    const loginControllerInstance = new LoginController(req, res);
-    loginControllerInstance.logout();
-});
+// app.get('/auth-logout/', (req, res) => {
+//     const loginControllerInstance = new LoginController(req, res);
+//     loginControllerInstance.logout();
+// });
 
 app.listen(port, host, () => {
     console.log(`Express đang chạy tại: http://${host}:${port}`);

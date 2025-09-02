@@ -10,13 +10,14 @@ class LoginController {
     async login(req, res) {
         try {
             const formData = req.body;
-            const {username, password} = formData;
+            const { username, password } = formData;
             const response = await this.loginModel.validate(username, password);
+            //console.log(response)
             if (response) {
                 return req.session.regenerate((err) => {
                     if (err) {
                         console.log(err);
-                        return res.status(500).json({err: 500});
+                        return res.status(500).json({ err: 500 });
                     }
 
                     req.session.user = username;
@@ -24,16 +25,16 @@ class LoginController {
                     req.session.save((err) => {
                         if (err) {
                             console.log(err)
-                            return res.status(500).json({err:500});
-                        } 
-                        return res.status(201).json({success: true});
+                            return res.status(500).json({ err: 500 });
+                        }
+                        return res.status(201).json({ success: true });
                     });
                 });
-            } 
-            return res.status(401).json({err:401});
+            }
+            return res.status(401).json({ err: 401 });
         } catch (err) {
             console.log(err);
-            return res.status(500).json({err:500});
+            return res.status(500).json({ err: 500 });
         }
         //return this.res.json({mess: 'login controller'});
     }
@@ -42,11 +43,11 @@ class LoginController {
         req.session.user = null;
         req.session.save((err) => {
             if (err) {
-                return res.status(500).json({err:500});
+                return res.status(500).json({ err: 500 });
             }
-            return res.status(201).json({success: true});
+            return res.status(201).json({ success: true });
         });
     }
 }
 
-export {LoginController}
+export { LoginController }
