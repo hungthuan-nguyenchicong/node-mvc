@@ -6,7 +6,15 @@ export default defineConfig({
 
     server: {
         proxy: {
-            '/auth/login': {
+            '/auth-login/': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
+            '/auth-check/': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
+            },
+            '/auth-logout/': {
                 target: 'http://localhost:3000',
                 changeOrigin: true,
             }

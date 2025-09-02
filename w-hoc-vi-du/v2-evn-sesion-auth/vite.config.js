@@ -10,7 +10,7 @@ export default defineConfig({
     root: './frontend/pages',
     server: {
         proxy: {
-            '/auth/login': {
+            '/auth-login': {
                 target: 'http://localhost:3000',
                 changeOrigin: true,
             },
