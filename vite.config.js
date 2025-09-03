@@ -1,8 +1,9 @@
 // vite.config.js
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
-    root: './frontend/pages',
+    root: './frontend',
 
     server: {
         proxy: {
@@ -19,5 +20,22 @@ export default defineConfig({
                 changeOrigin: true,
             }
         }
+    },
+    
+    // Add 'build' to the configuration
+    build: {
+      rollupOptions: {
+          input: {
+              // Correct path: remove the leading forward slash
+              main: resolve(__dirname, 'frontend/index.html'), 
+              // This path is already correct
+              product: resolve(__dirname, 'frontend/product/index.html'),
+          },
+          output: {
+              entryFileNames: `assets/[name]-[hash].js`,
+              chunkFileNames: `assets/[name]-[hash].js`,
+              assetFileNames: `assets/[name]-[hash].[ext]`
+          }
+      }
     }
 });

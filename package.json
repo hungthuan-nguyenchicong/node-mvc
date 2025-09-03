@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite & cd backend && nodemon server.js",
-    "start": "cd backend && node server.js"
+    "start": "cd backend && node server.js",
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,9 @@
     "mysql2": "^3.14.4"
   },
   "devDependencies": {
+    "express-http-proxy": "^2.1.1",
+    "http-proxy-middleware": "^3.0.5",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.10",
     "vite": "^7.1.4",
     "vite-plugin-include-html": "^1.0.0"
