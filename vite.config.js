@@ -1,10 +1,14 @@
 // vite.config.js
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import includeHtml from "vite-plugin-include-html";
 
 export default defineConfig({
     root: './frontend',
-
+    plugins: [
+        // Sử dụng một plugin duy nhất để xử lý HTML includes
+        includeHtml(),
+    ],
     server: {
         proxy: {
             '/auth-login/': {

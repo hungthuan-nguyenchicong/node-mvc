@@ -20,7 +20,7 @@ import { ExpressSession } from './core/ExpressSession.js';
 import { AuthMiddleware } from './core/AuthMiddleware.js';
 
 // dev server 
-//import { DevServer } from './untils/DevServer.js';
+import { DevServer } from './untils/DevServer.js';
 
 // project -> /var/www/html/node-mvc
 // const pathRoot = path.resolve(process.cwd(), '..');
@@ -79,14 +79,7 @@ new ExpressSession(app);
 new AuthMiddleware(app);
 
 // dev server -> use in npm run dev -> /dev/
-//new DevServer(app);
-
-// dev server In Vite fetch ssr
-if (process.env.NODE_ENV === 'development') {
-    const {DevServer} = await import('./untils/DevServer.js');
-    new DevServer(app);
-}
-
+new DevServer(app);
 app.get('/', (req, res) => {
     res.send('/ pathname /');
 });
