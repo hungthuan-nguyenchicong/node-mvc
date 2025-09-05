@@ -36,3 +36,6 @@ sudo apt-get autoremove
 sudo apt purge postgresql\*
 
 sudo apt autoremove
+
+## scss
+npm install -D sass-embedded

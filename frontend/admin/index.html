@@ -25,8 +25,11 @@
 </head>
 <body>
     <include src="frontend/admin/part/header.html"></include>
-    <h1>Admin Index</h1>
-    <button id="btnLogout">Logout</button>
+    <main>
+        <include src="frontend/admin/part/sidebar.html"></include>
+        <div id="mainContent"></div>
+    </main>
+    <include src="frontend/admin/part/footer.html"></include>
     <script type="module" src="../src/admin/mainAdmin.js"></script>
 </body>
 </html>

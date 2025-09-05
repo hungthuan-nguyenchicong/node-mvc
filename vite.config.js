@@ -2,13 +2,17 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 // npm i vite-plugin-include-html -D
-import includeHtml from "vite-plugin-include-html";
-
+//import includeHtml from "vite-plugin-include-html";
+//import includeHtml from "vite-include-html-plugin";
+import { includeHtml } from './vite-include-html-plugin';
 export default defineConfig({
     root: './frontend',
     plugins: [
         // Sử dụng một plugin duy nhất để xử lý HTML includes
-        includeHtml(),
+        includeHtml({
+            // Đặt tùy chọn silent để tắt thông báo
+            silent: true 
+        }),
     ],
     server: {
         proxy: {
@@ -31,6 +35,7 @@ export default defineConfig({
     build: {
         rollupOptions: {
             input: {
+                admin: resolve(__dirname, 'frontend/admin/index.html'),
                 // Correct path: remove the leading forward slash
                 main: resolve(__dirname, 'frontend/index.html'),
                 // This path is already correct
