@@ -11,6 +11,7 @@ class Database {
         const host = process.env.DB_HOST || 'localhost';
         const user = process.env.DB_USER || 'root';
         const password = process.env.DB_PASSWORD || '';
+        //console.log(password)
         const database = process.env.DB_NAME || 'mysql';
 
         // Tạo một connection pool thay vì một kết nối duy nhất
