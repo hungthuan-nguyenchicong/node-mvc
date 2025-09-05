@@ -39,3 +39,5 @@ sudo apt autoremove
 
 ## scss
 npm install -D sass-embedded
+## vite-include-html-plugin
+npm vite-include-html-plugin
