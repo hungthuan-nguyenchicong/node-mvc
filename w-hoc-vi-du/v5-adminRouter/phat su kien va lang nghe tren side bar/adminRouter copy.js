@@ -53,12 +53,7 @@ function searchStringhandler(url, mainContent) {
         }
     }
     renderContent(pageName, viewName, params, mainContent);
-    //console.log(pageName, viewName, params);
-
-    // phát sự kiện để sidebar bắt sự kiện css theo
-
-    const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:url}});
-    document.dispatchEvent(adminRouterEvent);
+    //console.log(pageName, viewName, params)
 }
 
 async function renderContent(pageName, viewName, params, mainContent) {

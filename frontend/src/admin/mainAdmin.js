@@ -2,7 +2,8 @@
 import './scss/adminMainScss.scss';
 import { btnLogout } from "../utils/btnLogout";
 // test sidebar
-import { leftSidebar } from './js/leftSidebar';
+//import { leftSidebar } from './js/leftSidebar';
+import { leftSidebar } from './utils/leftSidebar';
 // adminRouter
 import { adminRouter } from './core/adminRouter';
 
