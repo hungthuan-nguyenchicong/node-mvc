@@ -1,8 +1,15 @@
 <aside class="left-sidebar">
     <ul>
-        <li><a href="#">Home</a></li>
+        <li><a href="/admin/">Admin Dashboard</a></li>
         <hr>
-        <li><a href="#">Post</a></li>
-        <li><a href="#">Create post</a></li>
+        <li><a href="/admin/post">Test /admin/post</a></li>
+        <li><a href="/admin/?p=test&v=index">Test not found p /admin/?p=test&v=index</a></li>
+        <li><a href="/admin/?p=post&v=test">Test not found v /admin/?p=post&v=test</a></li>
+
+        <hr>
+        <li><a href="/admin/?p=post&v=index">Post</a></li>
+        <li><a href="/admin/?p=post&v=create">Create post</a></li>
+        <li><a href="/admin/?p=post&v=show&id=10">Show post 10</a></li>
+
     </ul>
 </aside>

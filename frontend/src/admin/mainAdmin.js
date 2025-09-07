@@ -3,6 +3,8 @@ import './scss/adminMainScss.scss';
 import { btnLogout } from "../utils/btnLogout";
 // test sidebar
 import { leftSidebar } from './js/leftSidebar';
+// adminRouter
+import { adminRouter } from './core/adminRouter';
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
@@ -12,4 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     btnLogout();
     leftSidebar();
+
+    // adminRouter
+    adminRouter(mainContent);
 });
