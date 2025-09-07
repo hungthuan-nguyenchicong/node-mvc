@@ -1,38 +1,20 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 // npm i vite-plugin-include-html -D
+//import includeHtml from "vite-plugin-include-html";
+//import includeHtml from "vite-include-html-plugin";
 import { includeHtml } from './vite-include-html-plugin';
-import { redirectAll } from './vite-plugin-rewrite-all';
 export default defineConfig({
     root: './frontend',
     plugins: [
         // Sử dụng một plugin duy nhất để xử lý HTML includes
-        includeHtml(),
-        redirectAll(),
-    //     {
-    //   name: 'log-plugin',
-    //   configureServer(server) {
-    //     console.log('Vite server started! 🚀');
-    //     server.middlewares.use((req, res, next) => {
-    //       console.log(`Request received: ${req.method} ${req.url}`);
-    //       next();
-    //     });
-    //   },
-    // },
-    ],
-    assetsInclude: [
-        '**/*.html'
+        includeHtml({
+            // Đặt tùy chọn silent để tắt thông báo
+            silent: true 
+        }),
     ],
     server: {
-        //info: 'abc',
-        // configureServer(server) {
-        //     console.log(1)
-        //     // Middleware này sẽ ghi log TẤT CẢ các yêu cầu đến máy chủ Vite
-        //     server.middlewares.use((req, res, next) => {
-        //         console.log(`[Vite] Yêu cầu: ${req.url}`);
-        //         next();
-        //     });
-        // },
         proxy: {
             '/auth-login/': {
                 target: 'http://localhost:3000',
@@ -48,11 +30,15 @@ export default defineConfig({
             }
         }
     },
+
+    // Add 'build' to the configuration
     build: {
         rollupOptions: {
             input: {
                 admin: resolve(__dirname, 'frontend/admin/index.html'),
+                // Correct path: remove the leading forward slash
                 main: resolve(__dirname, 'frontend/index.html'),
+                // This path is already correct
                 product: resolve(__dirname, 'frontend/product/index.html'),
             },
             output: {
@@ -61,6 +47,5 @@ export default defineConfig({
                 assetFileNames: `assets/[name]-[hash].[ext]`
             }
         }
-    },
-    
+    }
 });

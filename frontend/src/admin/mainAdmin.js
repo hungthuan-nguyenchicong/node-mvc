@@ -5,6 +5,11 @@ import { btnLogout } from "../utils/btnLogout";
 import { leftSidebar } from './js/leftSidebar';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const mainContent = document.getElementById('mainContent');
+    if (!mainContent) {
+        console.log('no div#mainContent');
+        return;
+    }
     btnLogout();
     leftSidebar();
 });

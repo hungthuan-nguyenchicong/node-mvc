@@ -7,6 +7,18 @@
             a {
                 text-decoration: none;
                 display: block;
+                color: white;
+                padding: 3% 3%;
+
+                &:hover {
+                    color: aqua;
+                    background-color: darkslateblue;
+                }
+
+                &.active {
+                    color: springgreen;
+                    background-color: lightslategray;
+                }
             }
         }
     }

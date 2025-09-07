@@ -25,6 +25,7 @@ main {
         width: 30%;
         box-shadow: 2px 2px 2px gray;
         border: 1px solid gray;
+        background-color: navy;
 
         @include left-sidebar.left-sidebar;
     }

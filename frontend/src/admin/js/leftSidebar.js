@@ -2,8 +2,15 @@
 
 function leftSidebar() {
     const leftSidebar = document.querySelector('.left-sidebar');
-    leftSidebar.addEventListener('click', () => {
-        console(1)
+    const links = leftSidebar.querySelectorAll('a')
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            //console.log(1);
+            links.forEach(linkItem => {
+                linkItem.classList.remove('active');
+            });
+            link.classList.add('active');
+        })
     })
 }
 
