@@ -1,8 +1,11 @@
 // frontend/src/admin/pages/posts/post-index.js
 
-async function postIndex(params = {}) {
+async function postIndex() {
     //console.log(params)
-    return await renderContent(params)
+    return {
+        render: renderContent,
+        init: init,
+    }
 }
 
 async function renderContent(params = {}) {
@@ -10,6 +13,10 @@ async function renderContent(params = {}) {
     return /* html */ `
     <h1>helo ${id}</h1>
     `;
+}
+
+function init() {
+    console.log(1)
 }
 
 export {postIndex}

@@ -11,9 +11,9 @@ function post() {
         return postIndex(params);
     }
 
-    async function create() {
+    async function create(params) {
         const {postCreate} = await import('./posts/post-create');
-        return postCreate();
+        return postCreate(params);
     }
 
     async function show(params = {}) {

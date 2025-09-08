@@ -2,9 +2,13 @@
 
 function dashboard() {
     function index () {
-        return /* html */ `
-        <h1>Dashboard</h1>
-        `;
+        function render() {
+            return /* html */ `
+            <h1>Dashboard</h1>
+            `;
+        }
+
+        return {render}
     };
 
     return {index};

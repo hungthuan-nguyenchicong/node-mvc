@@ -65,24 +65,20 @@ async function renderContent(pageName, viewName, params, mainContent) {
     const pageModule = routes[pageName];
 
     if (typeof pageModule === 'function') {
-        const pageFunction = pageModule()
-        //console.log(pageFunction[viewName])
+        const pageFunction = pageModule();
+
         const viewModule = pageFunction[viewName];
         if (typeof viewModule === 'function') {
-            const viewFunction = await viewModule();
-            mainContent.innerHTML = await viewFunction.render(params);
-            // // logic
-            if (typeof viewFunction.init === 'function') {
-                viewFunction.init();
-                //console.log(viewFunction)
-            }
+            const viewContent = await viewModule(params);
+            mainContent.innerHTML = viewContent;
+            //console.log(viewContent)
         } else {
             params.err = `Không tìm thấy: v=${viewName} --> trong: p=${pageName}`;
-            mainContent.innerHTML = routes.notFound().index().render(params);
+            mainContent.innerHTML = routes.notFound().index(params);
         }
     } else {
         params.err = `Trang không tồn tại: p=${pageName}`
-        mainContent.innerHTML = routes.notFound().index().render(params)
+        mainContent.innerHTML = routes.notFound().index(params)
     }
 }
 
