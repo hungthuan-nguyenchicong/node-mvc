@@ -21,13 +21,18 @@ function renderForm() {
 function init() {
     const form = document.getElementById('postCreate');
     form.addEventListener('submit', (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        requestServer(form)
     })
 }
 
 async function requestServer(form) {
-    const formData = new FormData(form);
-    const response = await fetch('')
+    //const formData = new FormData(form);
+    const response = await fetch('/api-admin/?PostController@create&id=5&page=5', {
+        method: "POST"
+    });
+    const result = await response.json();
+    console.log(result);
 }
 
 export {postCreate}

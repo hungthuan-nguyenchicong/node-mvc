@@ -5,7 +5,7 @@ import { ApiAdmin } from "./ApiAdmin.js";
 class AuthMiddleware {
     constructor(app) {
         this.loginControllerInstance = new LoginController();
-        //this.apiAdminInstance = new ApiAdmin();
+        this.apiAdminInstance = new ApiAdmin();
         //this.authCheck = this.authCheck.bind(this);
         this.login(app);
         this.check(app);
@@ -17,7 +17,7 @@ class AuthMiddleware {
         if (req.session.user) {
             next();
         } else {
-            return res.status(401).json({ err: 401 });
+            return res.status(401).json({err: 401});
             //return res.redirect('/logout/');
         }
     }
@@ -31,7 +31,7 @@ class AuthMiddleware {
 
     check(app) {
         app.post('/auth-check/', this.authCheck, (req, res) => {
-            res.status(201).json({ authCheck: true });
+            res.status(201).json({authCheck: true});
         });
     }
 
@@ -42,11 +42,10 @@ class AuthMiddleware {
     }
 
     apiAdmin(app) {
-        app.use('/api-admin/', this.authCheck, (req, res) => {
-            //this.apiAdminInstance.init(req, res);
-            new ApiAdmin(req, res)
+        app.use('/api-admin/', (req, res) => {
+            this.apiAdminInstance.init(req, res);
         })
     }
 }
 
-export { AuthMiddleware }
+export {AuthMiddleware}
