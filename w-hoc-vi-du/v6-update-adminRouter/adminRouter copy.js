@@ -14,23 +14,14 @@ function adminRouter(mainContent) {
             const linkHref = e.target.getAttribute('href');
             window.history.pushState(null, null, linkHref);
             //console.log(linkHref)
-            //searchStringhandler(linkHref, mainContent);
-            const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:linkHref}});
-            document.dispatchEvent(adminRouterEvent);
+            searchStringhandler(linkHref, mainContent);
         });
     });
 
     // nut tới và lui trufnh duyet -> wwindow -> popstate
     window.addEventListener('popstate', () => {
         const currentUrl = window.location.pathname + window.location.search;
-        //searchStringhandler(currentUrl, mainContent);
-        const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:currentUrl}});
-        document.dispatchEvent(adminRouterEvent);
-    });
-
-    // listen adminRouter
-    document.addEventListener('adminRouter', (e) => {
-        searchStringhandler(e.detail.url, mainContent);
+        searchStringhandler(currentUrl, mainContent);
     });
 }
 
@@ -66,8 +57,8 @@ function searchStringhandler(url, mainContent) {
 
     // phát sự kiện để sidebar bắt sự kiện css theo
 
-    // const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:url}});
-    // document.dispatchEvent(adminRouterEvent);
+    const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:url}});
+    document.dispatchEvent(adminRouterEvent);
 }
 
 async function renderContent(pageName, viewName, params, mainContent) {

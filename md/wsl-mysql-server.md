@@ -37,6 +37,11 @@ CREATE DATABASE ten_co_so_du_lieu;
 # Sử dụng một cơ sở dữ liệu:
 USE ten_co_so_du_lieu;
 
+# Xem đang ở database nào
+SELECT DATABASES()
+# Xem các bảng trong database
+SHOW TABLES
+
 # Tạo bảng:
 
 CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL, email VARCHAR(100) UNIQUE );

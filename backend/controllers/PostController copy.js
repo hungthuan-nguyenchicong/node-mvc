@@ -29,20 +29,6 @@ class PostController {
         }
         return this.res.status(405).json({ err: true });
     }
-
-    async show_posts() {
-        try {
-            const result = await this.postMoldeInstance.show_posts();
-            if (result) {
-                //console.log(result)
-                return this.res.status(201).json(result);
-            }
-            return this.res.status(500).json({err:true});
-        } catch (err) {
-            console.log(err);
-            return this.res.status(500).json({err:err});
-        }
-    }
-}   
+}
 
 export { PostController }

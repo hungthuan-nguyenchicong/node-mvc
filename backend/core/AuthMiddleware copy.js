@@ -28,10 +28,9 @@ class AuthMiddleware {
             return this.loginControllerInstance.login(req, res);
         });
     }
-    
-    // them this.authCheck
+
     check(app) {
-        app.post('/auth-check/',  (req, res) => {
+        app.post('/auth-check/', this.authCheck, (req, res) => {
             res.status(201).json({ authCheck: true });
         });
     }
@@ -41,9 +40,9 @@ class AuthMiddleware {
             this.loginControllerInstance.logout(req, res);
         });
     }
-    // them this.authCheck
+
     apiAdmin(app) {
-        app.use('/api-admin/',  (req, res) => {
+        app.use('/api-admin/', this.authCheck, (req, res) => {
             //this.apiAdminInstance.init(req, res);
             new ApiAdmin(req, res)
         })
