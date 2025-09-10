@@ -42,3 +42,17 @@ DELIMITER;
 ## xem
 SHOW PROCEDURE STATUS WHERE Db = 'nodeMvc';
 SHOW CREATE PROCEDURE show_posts;
+
+## DELIMITER show_post
+
+DELIMITER //
+CREATE PROCEDURE show_post(
+    IN postId INT
+)
+    SELECT post_title, post_description FROM posts WHERE post_id = postId;
+BEGIN
+END //
+DELIMITER;
+
+
+await poll.execute('CALL show_post(?), [id])

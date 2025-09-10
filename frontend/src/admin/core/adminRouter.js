@@ -82,7 +82,7 @@ async function renderContent(pageName, viewName, params, mainContent) {
             mainContent.innerHTML = await viewFunction.render(params);
             // // logic
             if (typeof viewFunction.init === 'function') {
-                viewFunction.init();
+                viewFunction.init(params);
                 //console.log(viewFunction)
             }
         } else {

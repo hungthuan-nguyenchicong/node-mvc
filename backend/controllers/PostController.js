@@ -43,6 +43,27 @@ class PostController {
             return this.res.status(500).json({err:err});
         }
     }
+
+    async show_post(params = {}) {
+        const {id = null} = params;
+        //console.log(params)
+        // Check if the ID is a valid number
+        const numericId = parseInt(id, 10);
+        if(isNaN(numericId) || !numericId) {
+            return this.res.status(201).json({err:`Vui lòng truyền &id=number`});
+        }
+        try {
+            const result = await this.postMoldeInstance.show_post(id);
+            if (result && result.length > 0) {
+                //console.log(result[0])
+                return this.res.status(201).json(result[0]);
+            }
+            return this.res.status(201).json({err:`show post: ${id} không tồn tại`});
+        } catch (err) {
+            console.log(err);
+            return this.res.status(500).json({err:err});
+        }
+    }
 }   
 
 export { PostController }

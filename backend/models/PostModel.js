@@ -37,6 +37,19 @@ BEGIN
 END //
 DELIMITER ;
 
+// Show by id
+
+
+DELIMITER //
+CREATE PROCEDURE show_post(
+    IN postId INT
+)
+    SELECT post_title, post_description FROM posts WHERE post_id = postId;
+BEGIN
+END //
+DELIMITER;
+
+await poll.execute('CALL show_post(?), [id])
 
  */
 
@@ -60,6 +73,16 @@ class PostModel {
     async show_posts() {
         try {
             const [result] = await this.pool.execute('CALL show_posts()');
+            return result[0];
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
+    async show_post(postId) {
+        try {
+            const [result] = await this.pool.execute('CALL show_post(?)', [postId]);
             return result[0];
         } catch (err) {
             console.log(err);
