@@ -51,6 +51,23 @@ DELIMITER;
 
 await poll.execute('CALL show_post(?), [id])
 
+
+// update_post
+
+DELIMITER //
+CREATE PROCEDURE update_post(
+    IN postId INT,
+    IN postTitle VARCHAR(255),
+    IN postDescription TEXT
+)
+BEGIN
+    UPDATE posts SET post_title = postTitle, post_description = postDescription WHERE post_id = postId;
+END //
+DELIMITER;
+
+
+await poll.execute('CALL update_post(?, ?, ?)', [postId, postTitle, postDescription])
+
  */
 
 import { Database } from "../core/Database.js"
@@ -87,6 +104,16 @@ class PostModel {
         } catch (err) {
             console.log(err);
             throw err;
+        }
+    }
+
+    async update_post(postId, postTitle, postDescription) {
+        try {
+            const result = await this.pool.execute('CALL update_post(?, ?, ?)', [postId, postTitle, postDescription]);
+            return result;
+        } catch (err) {
+            console.error(err);
+            throw err
         }
     }
 }

@@ -22,10 +22,16 @@ function post() {
         return postShow(params);
     }
 
+    async function edit() {
+        const {postEdit} = await import('./posts/post-edit');
+        return postEdit();
+    }
+
     return {
         index,
         create,
-        show
+        show,
+        edit
     }
 }
 

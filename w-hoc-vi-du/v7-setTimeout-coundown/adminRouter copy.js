@@ -95,10 +95,4 @@ async function renderContent(pageName, viewName, params, mainContent) {
     }
 }
 
-function adminRouterEvent(url) {
-    window.history.pushState(null, null, url);
-    const adminRouterEvent = new CustomEvent('adminRouter',{detail:{url:url}});
-    document.dispatchEvent(adminRouterEvent);
-}
-
-export { adminRouter, adminRouterEvent }
+export { adminRouter }
