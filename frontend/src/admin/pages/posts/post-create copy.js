@@ -15,7 +15,6 @@ function renderForm() {
         <textarea name="description" required></textarea><br>
         <button type="submit">Create</button>
         <div class="err-message"></div>
-        <br><button type="button" uploadFile>Upload File</button>
     </form>
     `;
 }
@@ -25,17 +24,6 @@ function init() {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         requestServer(form)
-    });
-
-    uploadFile()
-}
-
-function uploadFile() {
-    const upload = document.querySelector('button[uploadFile]');
-    upload.addEventListener('click', () => {
-        //console.log(1)
-        const uploadFileEvent = new CustomEvent('uploadFile', {detail:{type:'post'}});
-        document.dispatchEvent(uploadFileEvent);
     })
 }
 
