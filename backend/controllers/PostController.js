@@ -95,6 +95,22 @@ class PostController {
         }
         return this.res.status(405).json({ err: 405 });
     }
+
+    async delete_post(params = {}) {
+        const {id = null} = params;
+        if (this.req.method === "DELETE") {
+            try {
+                const result = await this.postMoldeInstance.delete_post(id);
+                if (result && result.length >0) {
+                    return this.res.status(201).json({success:true});
+                }
+            } catch (err) {
+                console.error(err);
+                return this.res.status(500).json({err:true});
+            }
+        }
+        this.res.status(405).json({err:true});
+    }
 }
 
 export { PostController }

@@ -1,5 +1,5 @@
 // frontend/src/admin/pages/posts/post-edit.js
-import { adminRouterEvent } from "../../core/adminRouter";
+//import { adminRouterEvent } from "../../core/adminRouter";
 function postEdit() {
     return {
         render: renderContent,

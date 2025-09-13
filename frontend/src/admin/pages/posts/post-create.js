@@ -1,5 +1,5 @@
 // frontend/src/admin/pages/posts/post-create.js
-
+//import { pageTransform } from "../../utils/pageTransform";
 function postCreate() {
     return {
         render: renderForm,
@@ -11,8 +11,8 @@ function renderForm() {
     return /* html */ `
     <form id="postCreate">
         <h2>Post Create</h2>
-        <input type="text" name="title"><br>
-        <textarea name="description"></textarea><br>
+        <input type="text" name="title" required><br>
+        <textarea name="description" required></textarea><br>
         <button type="submit">Create</button>
         <div class="err-message"></div>
     </form>
@@ -45,7 +45,14 @@ async function requestServer(form) {
         if (result.err) {
             return errMessage.innerHTML = result.err;
         }
-        form.reset();
+        if (result.success) {
+            alert('Đã thêm thành công');
+            form.reset();
+            const newUrl = '/admin/?p=post&v=index';
+            window.history.pushState(null, null, newUrl);
+            const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:newUrl}});
+            document.dispatchEvent(adminRouterEvent);
+        }
     } catch (err) {
         console.error(err);
         errMessage.innerHTML = err;

@@ -66,7 +66,21 @@ END //
 DELIMITER;
 
 
-await poll.execute('CALL update_post(?, ?, ?)', [postId, postTitle, postDescription])
+await poll.execute('CALL update_post(?, ?, ?)', [postId, postTitle, postDescription]);
+
+
+// delete_post
+
+DELIMITER //
+CREATE PROCEDURE delete_post(
+    IN postId INT
+)
+BEGIN
+    DELETE FROM posts WHERE post_id = postId;
+END //
+
+
+await pool.execute('CALL delete_post(?)', [postId]);
 
  */
 
@@ -115,6 +129,17 @@ class PostModel {
             console.error(err);
             throw err
         }
+    }
+
+    async delete_post(postId) {
+        try {
+            const result = await this.pool.execute('CALL delete_post(?)', [postId]);
+            return result;
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+
     }
 }
 

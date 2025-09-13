@@ -76,3 +76,54 @@ await poll.execute('CALL update_post(?, ?, ?)', [postId, postTitle, postDescript
 DELIMITER //
 DESC posts;
 //
+
+## DELIMITER delete_post();
+
+DELIMITER //
+CREATE PROCEDURE delete_post(
+    IN postId INT
+)
+BEGIN
+    DELETE FROM posts WHERE post_id = postId;
+END //
+
+
+await pool.execute('CALL delete_post(?)', [postId]);
+
+## trả về hàng mới nhất
+DELIMITER //
+
+CREATE PROCEDURE create_post(
+    IN postTitle VARCHAR(255),
+    IN postDescription TEXT
+)
+BEGIN
+    -- Insert a new row into the posts table
+    INSERT INTO posts (title, description) VALUES (postTitle, postDescription);
+    
+    -- Return the ID of the newly inserted row
+    SELECT LAST_INSERT_ID() AS new_post_id;
+END //
+
+DELIMITER ;
+
+
+async function create(postTitle, postDescription) {
+    try {
+        // Call the stored procedure and get the result
+        const [result] = await this.pool.execute('CALL create_post(?, ?)', [postTitle, postDescription]);
+        
+        // The result of a stored procedure with a SELECT is a nested array.
+        // The first element of the outer array contains the result of the SELECT.
+        // We can access the new ID from the returned object.
+        const newPostId = result[0].new_post_id;
+        
+        console.log('New post created with ID:', newPostId);
+        
+        // Return the new ID
+        return newPostId;
+    } catch (err) {
+        console.error('Error creating post:', err);
+        throw err;
+    }
+}

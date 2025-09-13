@@ -1,5 +1,5 @@
 // frontend/src/admin/pages/posts/post-show.js
-
+//import { pageTransform } from "../../utils/pageTransform";
 function postShow() {
 
     return {

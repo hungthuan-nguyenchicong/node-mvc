@@ -1,5 +1,5 @@
 // frontend/src/admin/pages/posts/post-index.js
-import { pageTransform } from "../../utils/pageTransform";
+//import { pageTransform } from "../../utils/pageTransform";
 async function postIndex() {
     //console.log(params)
     return {
@@ -98,7 +98,7 @@ function renderTbody(posts) {
 
 function clickBtnShow(btnShow) {
     btnShow.addEventListener('click', (e) => {
-        pageTransform();
+        //pageTransform();
         const postId = e.target.dataset.postId;
         const newUrl = `/admin/?p=post&v=show&id=${postId}`;
         window.history.pushState(null, null, newUrl);

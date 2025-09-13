@@ -3,7 +3,11 @@ import { routes } from "../pages/routes";
 function adminRouter(mainContent) {
     //initial page load
     const initialUrl = window.location.pathname + window.location.search;
-    searchStringhandler(initialUrl, mainContent)
+    searchStringhandler(initialUrl, mainContent);
+
+    // Phát sự kiện adminRouter ngay khi trang tải xong
+    const initialAdminRouterEvent = new CustomEvent('adminRouter', { detail: { url: initialUrl } });
+    document.dispatchEvent(initialAdminRouterEvent);
     //console.log(initialUrl)
 
     // a link SPA for /admin/
@@ -15,7 +19,7 @@ function adminRouter(mainContent) {
             window.history.pushState(null, null, linkHref);
             //console.log(linkHref)
             //searchStringhandler(linkHref, mainContent);
-            const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:linkHref}});
+            const adminRouterEvent = new CustomEvent('adminRouter', { detail: { url: linkHref } });
             document.dispatchEvent(adminRouterEvent);
         });
     });
@@ -24,7 +28,7 @@ function adminRouter(mainContent) {
     window.addEventListener('popstate', () => {
         const currentUrl = window.location.pathname + window.location.search;
         //searchStringhandler(currentUrl, mainContent);
-        const adminRouterEvent = new CustomEvent('adminRouter', {detail:{url:currentUrl}});
+        const adminRouterEvent = new CustomEvent('adminRouter', { detail: { url: currentUrl } });
         document.dispatchEvent(adminRouterEvent);
     });
 
@@ -40,7 +44,7 @@ function searchStringhandler(url, mainContent) {
     let searchString = splitUrl[1];
 
     // khởi tạo searchString cho default -> /admin/
-    
+
     if (pathname === '/admin/' && !searchString) {
         searchString = 'p=dashboard&v=index';
     }
@@ -57,7 +61,7 @@ function searchStringhandler(url, mainContent) {
     // lấy params
     let params = {};
     for (const [key, value] of queryString) {
-        if(key !== 'p' & key !== 'v') {
+        if (key !== 'p' & key !== 'v') {
             params[key] = value;
         }
     }
@@ -97,7 +101,7 @@ async function renderContent(pageName, viewName, params, mainContent) {
 
 function adminRouterEvent(url) {
     window.history.pushState(null, null, url);
-    const adminRouterEvent = new CustomEvent('adminRouter',{detail:{url:url}});
+    const adminRouterEvent = new CustomEvent('adminRouter', { detail: { url: url } });
     document.dispatchEvent(adminRouterEvent);
 }
 
