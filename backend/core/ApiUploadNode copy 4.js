@@ -22,13 +22,24 @@ class ApiUploadNode {
         return async (req, res) => {
             const hostPhp = 'http://localhost/api-upload-php/';
             const formData = new FormData();
-
+            
+            // Check if a file was uploaded and get its information
             if (req.files && req.files.file && req.files.file[0]) {
                 const uploadedFile = req.files.file[0];
-                const mimetype = uploadedFile.mimetype;
-                const filePath = uploadedFile.path;
-                const blob = fileFromSync(filePath, mimetype);
-                formData.set('file', blob);
+                
+                // Read the file data and append it to FormData
+                const fileStream = fs.createReadStream(uploadedFile.path);
+                
+                // Note: fileFromSync is an alternative for node-fetch >= 3.0.0
+                // For node-fetch < 3.0.0, you would use a different method.
+                // Assuming you have node-fetch v3 or later
+                formData.set('file', fileFromSync(uploadedFile.path, uploadedFile.mimetype));
+                // Or for versions of node-fetch without fileFromSync, you can use:
+                // formData.append('file', fileStream, uploadedFile.originalname);
+                
+                // Add any other fields if needed
+                formData.set('other_field', 'some_value');
+
             } else {
                 return res.status(400).json({ error: 'No file uploaded' });
             }
@@ -39,20 +50,12 @@ class ApiUploadNode {
                     body: formData,
                 });
                 const result = await response.json();
-                console.log(result);
-
-                // Check if the file was processed successfully by the PHP server
-                if (result && result.status === 'success') {
-                    // Delete the temporary file
-                    fs.unlink(req.files.file[0].path, (err) => {
-                        if (err) {
-                            console.error("Error deleting temporary file:", err);
-                        } else {
-                            console.log("Temporary file deleted successfully:", req.files.file[0].path);
-                        }
-                    });
-                }
-
+                
+                // You can also delete the temporary file after it's been sent
+                // fs.unlink(req.files.file[0].path, (err) => {
+                //    if (err) console.error(err);
+                // });
+                
                 return res.json(result);
 
             } catch (error) {
@@ -61,5 +64,16 @@ class ApiUploadNode {
             }
         };
     }
+
+    registerRoutes(app) {
+        app.post('/api-upload-node/', this.uploadMiddleware, this.apiUploadPhp());
+    }
 }
-export { ApiUploadNode };
+
+// Function to set up the route
+function apiUploadNode(app) {
+    const apiUploadNodeInstance = new ApiUploadNode();
+    apiUploadNodeInstance.registerRoutes(app);
+}
+
+export { ApiUploadNode, apiUploadNode };

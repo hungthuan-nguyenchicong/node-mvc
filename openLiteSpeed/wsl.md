@@ -25,3 +25,5 @@ sudo chown nobody:nogroup /var/www/html/node-mvc/openLiteSpeed/nodeMvc/public/up
 
 sudo chmod 777 /var/www/html/node-mvc/openLiteSpeed/nodeMvc/public/uploads
 sudo usermod -aG nogroup cong
+
+sudo tail -f /usr/local/lsws/logs/error.log

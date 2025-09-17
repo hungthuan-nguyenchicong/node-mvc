@@ -1,7 +1,7 @@
 <?php
 // ... (các header của bạn)
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+//header('Access-Control-Allow-Origin: *');
+
 
 $response = [];
 
@@ -16,7 +16,8 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
     $uploadDir = __DIR__ . '/../uploads/';
 
     //error_log('upload: ' . $uploadDir);
-    //error_log('file: ' . $_FILES["file"]);
+    $err = var_export($_FILES['file'], true);
+    error_log($err);
     
     // 4. Tạo đường dẫn đầy đủ cho file đích
     $destPath = $uploadDir . $fileName;
@@ -26,6 +27,7 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
         $response['status'] = 'success';
         $response['message'] = 'File đã được tải lên thành công.';
         $response['filePath'] = $destPath;
+        $response['src'] = '/upload/'. $fileName;
     } else {
         $response['status'] = 'error';
         $response['message'] = 'Không thể di chuyển file.';
@@ -36,5 +38,6 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
 }
 
 // Trả về JSON chứa kết quả
+header('Content-Type: application/json');
 echo json_encode($response);
 ?>
