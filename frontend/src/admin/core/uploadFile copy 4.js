@@ -35,7 +35,9 @@ function renderUpload() {
 function renderUploadContent() {
     return /* html */ `
     <button type="button" uploadClose>x</button>
-    <form id="uploadForm" enctype="multipart/form-data">
+    <!-- <form id="uploadForm" enctype="multipart/form-data"> -->
+    <form id="uploadForm">
+
         <input type="file" name="file"><br>
         <button type="submit">Upload Image</button>
     </form>

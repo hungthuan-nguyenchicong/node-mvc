@@ -1,0 +1,9 @@
+# RewriteEngine On
+# RewriteCond %{HTTP:X-From-Node} !^true$
+# RewriteRule .* - [F,L]
+
+# RewriteEngine On
+# Kiểm tra nếu header X-From-Node không tồn tại hoặc không có giá trị là 'true'
+# RewriteCond %{HTTP:X-From-Node} !^true$
+# Áp dụng quy tắc này cho TẤT CẢ các yêu cầu (bất kể phương thức GET, POST, ...)
+# RewriteRule .* - [F,L]

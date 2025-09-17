@@ -1,3 +1,5 @@
 /node_modules
 *.env
 /frontend/dist
+/backend/uploads
+/openLiteSpeed/nodeMvc/public/uploads

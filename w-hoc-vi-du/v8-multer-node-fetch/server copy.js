@@ -19,9 +19,6 @@ import { ExpressSession } from './core/ExpressSession.js';
 // check auth
 import { AuthMiddleware } from './core/AuthMiddleware.js';
 
-// npm i express-fileupload
-//import fileUpload from 'express-fileupload'; // Thêm express-fileupload
-
 // dev server 
 //import { DevServer } from './untils/DevServer.js';
 
@@ -53,9 +50,6 @@ new Dotenv();
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || 'localhost';
 //const secret = process.env.SECRET || 'keyboard cat';
-
-// Middleware để xử lý file upload
-//app.use(fileUpload()); // Middleware để xử lý file upload
 
 // formData
 //app.use(formData.parse());
@@ -89,7 +83,7 @@ new AuthMiddleware(app);
 
 // dev server In Vite fetch ssr
 if (process.env.NODE_ENV === 'development') {
-    const { DevServer } = await import('./untils/DevServer.js');
+    const {DevServer} = await import('./untils/DevServer.js');
     new DevServer(app);
 }
 

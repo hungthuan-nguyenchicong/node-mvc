@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon.png">
     <title>Admin Index</title>
-    <style>
+    <!-- <style>
         body {
             display: none;
         }
-    </style>
-    <script>
+    </style> -->
+    <!-- <script>
         async function authCkeck() {
             const response = await fetch('/auth-check/', {method: "POST"});
             const result = await response.json();
@@ -22,8 +23,9 @@
             }
         }
         authCkeck();
-    </script>
+    </script> -->
 </head>
+
 <body>
     <include src="frontend/admin/part/header.html"></include>
     <main>
@@ -33,4 +35,5 @@
     <include src="frontend/admin/part/footer.html"></include>
     <script type="module" src="../src/admin/mainAdmin.js"></script>
 </body>
+
 </html>

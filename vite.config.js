@@ -9,16 +9,16 @@ export default defineConfig({
         // Sử dụng một plugin duy nhất để xử lý HTML includes
         includeHtml(),
         redirectAll(),
-    //     {
-    //   name: 'log-plugin',
-    //   configureServer(server) {
-    //     console.log('Vite server started! 🚀');
-    //     server.middlewares.use((req, res, next) => {
-    //       console.log(`Request received: ${req.method} ${req.url}`);
-    //       next();
-    //     });
-    //   },
-    // },
+        //     {
+        //   name: 'log-plugin',
+        //   configureServer(server) {
+        //     console.log('Vite server started! 🚀');
+        //     server.middlewares.use((req, res, next) => {
+        //       console.log(`Request received: ${req.method} ${req.url}`);
+        //       next();
+        //     });
+        //   },
+        // },
     ],
     assetsInclude: [
         '**/*.html'
@@ -70,5 +70,5 @@ export default defineConfig({
             }
         }
     },
-    
+
 });

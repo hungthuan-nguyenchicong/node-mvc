@@ -65,8 +65,6 @@ function submitForm() {
 async function reqestUploadForm(form) {
     const formData = new FormData(form);
     const response = await fetch('/api-upload-node/', {
-        //const response = await fetch('http://localhost/api-upload-php/', {
-
         method: 'POST',
         body: formData
     });
