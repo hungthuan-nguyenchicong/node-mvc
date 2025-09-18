@@ -71,19 +71,7 @@ async function reqestUploadForm(form) {
         body: formData
     });
     const result = await response.json();
-    //console.log(result);
-    renderImage(form, result)
-}
-
-function renderImage(form, result) {
-    const divImg = document.createElement('div');
-
-
-    const img = /* html */ `
-    <img src="${result.src}" alt="">
-    `;
-    divImg.innerHTML = img;
-    form.appendChild(divImg);
+    console.log(result);
 }
 
 export { uploadFile }

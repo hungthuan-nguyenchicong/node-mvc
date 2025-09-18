@@ -53,6 +53,10 @@ export default defineConfig({
             '/api-upload-node/': {
                 target: 'http://localhost:3000',
                 changeOrigin: true,
+            },
+            '/uploads': {
+                target: 'http://localhost:3000',
+                changeOrigin: true,
             }
         }
     },
