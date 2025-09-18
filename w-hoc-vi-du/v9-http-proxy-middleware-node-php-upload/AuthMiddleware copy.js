@@ -90,15 +90,11 @@ class AuthMiddleware {
     //     app.post('/api-upload-node/', ApiUploadNode());
     // }
 
-    // apiUploadNode(app) {
-    //     const apiUploadNodeInstance = new ApiUploadNode();
-    //     // Correctly pass the function to the route handler.
-    //     // Express will automatically call this function when a POST request is made to this route.
-    //     app.post('/api-upload-node/', apiUploadNodeInstance.uploadMiddleware, apiUploadNodeInstance.apiUploadPhp());
-    // }
-
     apiUploadNode(app) {
-        new ApiUploadNode(app);
+        const apiUploadNodeInstance = new ApiUploadNode();
+        // Correctly pass the function to the route handler.
+        // Express will automatically call this function when a POST request is made to this route.
+        app.post('/api-upload-node/', apiUploadNodeInstance.uploadMiddleware, apiUploadNodeInstance.apiUploadPhp());
     }
 
 
