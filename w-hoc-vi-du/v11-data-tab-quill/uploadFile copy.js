@@ -1,5 +1,6 @@
 // frontend/src/admin/core/uploadFile.js
 import './uploadFile.scss';
+import { uploadTab } from './parts/upload-tab';
 function uploadFile() {
     document.addEventListener('uploadFile', (e) => {
         renderUpload();
@@ -35,16 +36,26 @@ function renderUpload() {
 function renderUploadContent() {
     return /* html */ `
     <button type="button" uploadClose>x</button>
-    <form id="uploadForm">
-        <input type="file" name="file"><br>
-        <button type="submit">Upload Image</button>
-    </form>
+    <div class="tab">
+        <button class="tab-links" data-tab-content="uploadImage">Upload Image</button>
+        <button class="tab-links" data-tab-content="galleryImages">Gallery images</button>
+    </div>
+    <div id="uploadImage" class="tab-contents">
+        <form id="uploadForm">
+            <input type="file" name="file"><br>
+            <button type="submit">Upload Image</button>
+        </form>
+    </div>
+    <div id="galleryImages" class="tab-contents">
+        <div>Gallery images content</div>
+    </div>
     `;
 }
 
 function initUpload(uploadContent) {
     clicBtnClose(uploadContent);
-    submitForm()
+    uploadTab(uploadContent);
+    submitForm();
 }
 
 function clicBtnClose(uploadContent) {

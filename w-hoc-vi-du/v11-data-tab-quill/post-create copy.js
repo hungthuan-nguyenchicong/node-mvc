@@ -1,6 +1,5 @@
 // frontend/src/admin/pages/posts/post-create.js
 //import { pageTransform } from "../../utils/pageTransform";
-import { quillJs } from "../../libery/quill/quillJs";
 function postCreate() {
     return {
         render: renderForm,
@@ -14,7 +13,6 @@ function renderForm() {
         <h2>Post Create</h2>
         <input type="text" name="title" required><br>
         <textarea name="description" required></textarea><br>
-        <div id="editor"></div>
         <button type="submit">Create</button>
         <div class="err-message"></div>
         <br><button type="button" uploadFile>Upload File</button>
@@ -23,7 +21,6 @@ function renderForm() {
 }
 
 function init() {
-    quillJs();
     const form = document.getElementById('postCreate');
     form.addEventListener('submit', (e) => {
         e.preventDefault();

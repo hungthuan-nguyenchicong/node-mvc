@@ -1,0 +1,31 @@
+// frontend/src/admin/core/uploadFile.scss
+
+.upload-content {
+    display: none;
+
+    &.active {
+        display: block;
+    }
+
+    .tab {
+        border: 1px solid #ccc;
+
+        button {
+            padding: 14px 16px;
+            cursor: pointer;
+
+            &.active {
+                background-color: cornflowerblue;
+                color: white;
+            }
+        }
+    }
+
+    .tab-contents {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+}

@@ -31,7 +31,8 @@
     "express-session": "^1.18.2",
     "form-data": "^4.0.4",
     "multer": "^2.0.2",
-    "mysql2": "^3.14.4"
+    "mysql2": "^3.14.4",
+    "quill": "^2.0.3"
   },
   "devDependencies": {
     "express-http-proxy": "^2.1.1",

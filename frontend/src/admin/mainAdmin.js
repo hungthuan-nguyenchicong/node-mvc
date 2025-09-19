@@ -7,7 +7,7 @@ import { leftSidebar } from './utils/leftSidebar';
 // adminRouter
 import { adminRouter } from './core/adminRouter';
 // uploadFile
-import { uploadFile } from './core/uploadFile';
+import { uploadFile } from './libery/upload-file/uploadFile';
 
 document.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.getElementById('mainContent');
