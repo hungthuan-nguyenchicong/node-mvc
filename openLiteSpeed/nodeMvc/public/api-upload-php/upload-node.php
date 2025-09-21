@@ -29,6 +29,14 @@ if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
     // 4. Tạo đường dẫn đầy đủ cho file đích
     $destPath = $uploadDir . $fileName;
 
+    // kiểm tra file có tồn tại
+    // if (file_exists($destPath)) {
+    //     http_response_code(500);
+    //     $response['err'] = 'File đã tồn tại vui lòng chọn tên khác';
+    //     echo json_encode($response);
+    //     exit;
+    // }
+
     // 5. Di chuyển file từ thư mục tạm đến thư mục đích
     if (move_uploaded_file($fileTmpPath, $destPath)) {
         $response['status'] = 'success';

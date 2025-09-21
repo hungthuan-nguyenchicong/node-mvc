@@ -21,6 +21,7 @@ const apiProxy = createProxyMiddleware({
                 console.log(data);
                 // manipulate JSON data here
                 data = Object.assign({}, data, { extra: 'foo bar' });
+
                 // return manipulated JSON
                 return JSON.stringify(data);
             }
@@ -71,10 +72,8 @@ const databaseImage = async (req, res, next) => {
             return res.status(500).json({ err: 'Internal Server Error', details: dbError.message });
         }
     }
-    // res.status(405).json({ err: 405 });
+
     // Nếu không phải là POST, chỉ gọi next()
-    //return next(err);
-    //res.json({ err: 405 });
     next();
 };
 
@@ -85,9 +84,7 @@ class ApiUploadNode {
         // app.post('/api-upload-node/', (req, res) => {
         //     return res.json({ ok: 'ok' });
         // });
-        //app.post('/api-upload-node/', imageControllerInstance.insert, apiProxy);
-        app.use('/api-upload-node/', imageControllerInstance.insert, apiProxy);
-
+        app.post('/api-upload-node/', imageControllerInstance.insert, apiProxy);
         // Định nghĩa route cho các tệp tĩnh
         app.use('/uploads', imageProxy);
     }
