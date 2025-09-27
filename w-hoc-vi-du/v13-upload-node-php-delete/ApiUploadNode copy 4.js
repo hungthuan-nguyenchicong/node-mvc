@@ -16,8 +16,6 @@ const apiProxy = createProxyMiddleware({
             // const bodyData = JSON.stringify(req.dbResult);
             // console.log(bodyData);
             proxyReq.setHeader('X-From-Node', 'true');
-            proxyReq.setHeader('X-Image-Insert-Id', req.imageInsertId);
-            //console.log(req.imageInsertId);
             // if (req.dbResult) {
             //     proxyReq.setHeader('X-Data-Image', req.dbResult)
             // }
@@ -51,8 +49,7 @@ const apiProxy = createProxyMiddleware({
                 let data = JSON.parse(responseBuffer.toString('utf8'));
                 console.log(data);
                 // manipulate JSON data here
-                // data = Object.assign({}, data, { extra: 'foo bar' });
-                //data = Object.assign({}, data);
+                data = Object.assign({}, data, { extra: 'foo bar' });
                 // return manipulated JSON
                 return JSON.stringify(data);
                 // JSON.stringify(data);
@@ -135,7 +132,6 @@ class ApiUploadNode {
         // });
         //app.post('/api-upload-node/', imageControllerInstance.insert, apiProxy);
         app.use('/api-upload-node/', imageControllerInstance.insert, apiProxy);
-        app.use('/api-upload-delete/', imageControllerInstance.delete)
         //app.use('/api-upload-node/', databaseImage, apiProxy);
         // Định nghĩa route cho các tệp tĩnh
         app.use('/uploads', imageProxy);

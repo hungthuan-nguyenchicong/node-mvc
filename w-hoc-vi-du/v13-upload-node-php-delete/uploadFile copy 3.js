@@ -80,7 +80,6 @@ async function requestUploadForm(form) {
         const fileInput = form.querySelector('input[type="file"]');
         const file = fileInput.files[0];
         let errMessage = form.querySelector('.err-message');
-        errMessage.innerHTML = '';
         const response = await fetch('/api-upload-node/', {
             //const response = await fetch('http://localhost/api-upload-php/', {
 
@@ -104,16 +103,9 @@ async function requestUploadForm(form) {
         const result = await response.json();
         if (result.err) {
             return errMessage.innerHTML = result.err;
-        } else if (result.status === 'error-upload-php' && result.image_insert_id) {
-            console.log(result.image_insert_id)
-            const responseDelete = await fetch(`/api-upload-delete/?imageId=${result.image_insert_id} `, {
-                method: 'DELETE',
-            });
-            const resultDelete = await responseDelete.json();
-            console.log(resultDelete);
         }
         console.log(result);
-        renderImage(form, result);
+        renderImage(form, result)
     } catch (err) {
         console.error(err);
     }
@@ -124,7 +116,7 @@ function renderImage(form, result) {
 
 
     const img = /* html */ `
-    <img src="${result.image_src}" alt="">
+    <img src="${result.src}" alt="">
     `;
     divImg.innerHTML = img;
     form.appendChild(divImg);

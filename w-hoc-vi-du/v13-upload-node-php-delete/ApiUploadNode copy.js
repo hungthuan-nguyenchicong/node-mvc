@@ -10,40 +10,9 @@ const apiProxy = createProxyMiddleware({
     selfHandleResponse: true, // res.end() will be called internally by responseInterceptor()
 
     on: {
-        proxyReq: (proxyReq, req, res) => {
-            //console.log(req.dbResult)
-            // Thêm header 'X-From-Node'
-            // const bodyData = JSON.stringify(req.dbResult);
-            // console.log(bodyData);
+        proxyReq: (proxyReq) => {
+            /* handle proxyReq */
             proxyReq.setHeader('X-From-Node', 'true');
-            proxyReq.setHeader('X-Image-Insert-Id', req.imageInsertId);
-            //console.log(req.imageInsertId);
-            // if (req.dbResult) {
-            //     proxyReq.setHeader('X-Data-Image', req.dbResult)
-            // }
-            // proxyReq.setHeader('Content-Type', 'application/json');
-            // proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
-            // proxyReq.write(bodyData);
-            //req.body = req.dbResult
-            // Thêm header tùy chỉnh để gửi dữ liệu dbResult qua PHP
-            // if (req.dbResult) {
-            //     proxyReq.setHeader('X-Db-Result', req.dbResult);
-            // }
-
-            // Ghi body của yêu cầu gốc vào yêu cầu proxy
-            // if (req.body) {
-            //     const bodyData = JSON.stringify(req.body);
-
-            //     // Thêm header Content-Type và Content-Length để server đích biết kích thước body
-            //     proxyReq.setHeader('Content-Type', 'application/json');
-            //     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
-
-            //     // Ghi body vào yêu cầu proxy
-            //proxyReq.write(req.dbResult);
-            // }
-
-            // // Kết thúc yêu cầu proxy sau khi đã ghi hết dữ liệu
-            //proxyReq.end();
         },
         proxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
             // detect json responses
@@ -51,18 +20,13 @@ const apiProxy = createProxyMiddleware({
                 let data = JSON.parse(responseBuffer.toString('utf8'));
                 console.log(data);
                 // manipulate JSON data here
-                // data = Object.assign({}, data, { extra: 'foo bar' });
-                //data = Object.assign({}, data);
+                data = Object.assign({}, data, { extra: 'foo bar' });
                 // return manipulated JSON
                 return JSON.stringify(data);
-                // JSON.stringify(data);
-                // return next();
             }
 
             // return other content-types as-is
             return responseBuffer;
-            // responseBuffer;
-            // return next();
         }),
     },
 });
@@ -80,8 +44,8 @@ const imageProxy = createProxyMiddleware({
 
 // Middleware để tương tác với database trước khi chuyển tiếp request
 const databaseImage = async (req, res, next) => {
-    console.log(req.headers);
     // Chỉ xử lý các request POST
+    //console.log(req)
     if (req.method === 'POST') {
         try {
             console.log('Đang thực hiện logic database...');
@@ -95,19 +59,8 @@ const databaseImage = async (req, res, next) => {
 
             if (isDbWriteSuccessful) {
                 console.log('Ghi database thành công. Chuyển tiếp tới proxy.');
-                // Gọi next() để chuyển request tới middleware tiếp theo (apiProxy);
-                // const data = {
-                //     data: 'ok'
-                // };
-                //JSON.stringify(data);
-                //res.status(201).json(data);
-                //res.header('X-DATA', 'abc');
-                req.dbResult = 'ok';
-                //req.dbResult = JSON.stringify(data);
-                //res.append('content-type: application/json', JSON.stringify(data));
+                // Gọi next() để chuyển request tới middleware tiếp theo (apiProxy)
                 return next();
-                //return next(JSON.stringify(data));
-                //return next.json(data);
             } else {
                 // Nếu ghi database thất bại, trả về lỗi ngay lập tức
                 console.log('Ghi database thất bại. Đã dừng request.');
@@ -119,11 +72,11 @@ const databaseImage = async (req, res, next) => {
             return res.status(500).json({ err: 'Internal Server Error', details: dbError.message });
         }
     }
-    return res.status(405).json({ err: 405 });
+    // res.status(405).json({ err: 405 });
     // Nếu không phải là POST, chỉ gọi next()
     //return next(err);
     //res.json({ err: 405 });
-    //next();
+    next();
 };
 
 
@@ -135,8 +88,7 @@ class ApiUploadNode {
         // });
         //app.post('/api-upload-node/', imageControllerInstance.insert, apiProxy);
         app.use('/api-upload-node/', imageControllerInstance.insert, apiProxy);
-        app.use('/api-upload-delete/', imageControllerInstance.delete)
-        //app.use('/api-upload-node/', databaseImage, apiProxy);
+
         // Định nghĩa route cho các tệp tĩnh
         app.use('/uploads', imageProxy);
     }

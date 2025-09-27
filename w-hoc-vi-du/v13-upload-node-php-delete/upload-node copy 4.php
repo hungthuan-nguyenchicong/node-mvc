@@ -11,18 +11,14 @@ if ($headers['X-Image-Insert-Id']) {
         $fileTmpPath = $_FILES['file']['tmp_name'];
         $fileName = basename($_FILES['file']['name']);
         // thư mục lưu trữ file
-        $uploadDir = __DIR__ . './../uploads/';
+        $uploadDir = __DIR__ . '/../uploads/';
         // Đường dẫn đầy dủ cho file đích
         $destPath = $uploadDir . $fileName;
-        // Đường dẫn image src
-        $imageSrc = '/uploads/' . $fileName;
         // Di chuyển từ thư mục tạm đến thư mục đích
         if (move_uploaded_file($fileTmpPath, $destPath)) {
             $response['status'] = 'success';
-            $response['image_src'] = $imageSrc;
         } else {
-            $response['status'] = 'error-upload-php';
-            $response['image_insert_id'] = $headers['X-Image-Insert-Id'];
+            $response['status'] = 'error';
             $response['message'] = 'Không thể di chuyển file.';
         }
 

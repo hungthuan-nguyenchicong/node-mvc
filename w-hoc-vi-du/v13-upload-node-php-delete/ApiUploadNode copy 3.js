@@ -16,11 +16,9 @@ const apiProxy = createProxyMiddleware({
             // const bodyData = JSON.stringify(req.dbResult);
             // console.log(bodyData);
             proxyReq.setHeader('X-From-Node', 'true');
-            proxyReq.setHeader('X-Image-Insert-Id', req.imageInsertId);
-            //console.log(req.imageInsertId);
-            // if (req.dbResult) {
-            //     proxyReq.setHeader('X-Data-Image', req.dbResult)
-            // }
+            if (req.dbResult) {
+                proxyReq.setHeader('X-Data-Image', req.dbResult)
+            }
             // proxyReq.setHeader('Content-Type', 'application/json');
             // proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
             // proxyReq.write(bodyData);
@@ -51,18 +49,13 @@ const apiProxy = createProxyMiddleware({
                 let data = JSON.parse(responseBuffer.toString('utf8'));
                 console.log(data);
                 // manipulate JSON data here
-                // data = Object.assign({}, data, { extra: 'foo bar' });
-                //data = Object.assign({}, data);
+                data = Object.assign({}, data, { extra: 'foo bar' });
                 // return manipulated JSON
                 return JSON.stringify(data);
-                // JSON.stringify(data);
-                // return next();
             }
 
             // return other content-types as-is
             return responseBuffer;
-            // responseBuffer;
-            // return next();
         }),
     },
 });
@@ -80,7 +73,6 @@ const imageProxy = createProxyMiddleware({
 
 // Middleware để tương tác với database trước khi chuyển tiếp request
 const databaseImage = async (req, res, next) => {
-    console.log(req.headers);
     // Chỉ xử lý các request POST
     if (req.method === 'POST') {
         try {
@@ -135,7 +127,6 @@ class ApiUploadNode {
         // });
         //app.post('/api-upload-node/', imageControllerInstance.insert, apiProxy);
         app.use('/api-upload-node/', imageControllerInstance.insert, apiProxy);
-        app.use('/api-upload-delete/', imageControllerInstance.delete)
         //app.use('/api-upload-node/', databaseImage, apiProxy);
         // Định nghĩa route cho các tệp tĩnh
         app.use('/uploads', imageProxy);

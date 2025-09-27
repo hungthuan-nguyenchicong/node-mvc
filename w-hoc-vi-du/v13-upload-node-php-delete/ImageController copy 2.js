@@ -3,7 +3,6 @@ import { ImageModel } from "../models/ImageModel.js";
 class ImageController {
     constructor() {
         this.insert = this.insert.bind(this);
-        this.delete = this.delete.bind(this);
         this.imageModelInstance = new ImageModel();
     }
 
@@ -13,7 +12,7 @@ class ImageController {
         if (req.method === 'POST') {
             try {
                 const imageName = req.get('x-file-name');
-                const imageSrc = '/uploads/' + imageName;
+                const imageSrc = '/upload/' + imageName;
                 const imageInsertId = await this.imageModelInstance.insert_image(imageSrc);
                 //console.log(imageInsertId);
                 if (imageInsertId) {
@@ -34,24 +33,6 @@ class ImageController {
         //next();
 
         // Nếu không phải là POST, chỉ gọi next()
-        return res.status(405).json({ err: 405 });
-    }
-
-    async delete(req, res) {
-        if (req.method === 'DELETE') {
-            const imageId = req.query.imageId;
-            if (imageId) {
-                //console.log(imageId);
-                try {
-                    await this.imageModelInstance.delete_image(imageId);
-                    return res.status(201).json({ delete: 'ok' })
-                } catch (err) {
-                    console.log(err);
-                    return res.status(500).json({ err: err });
-                }
-            }
-            return res.status(500).json({ err: 500 });
-        }
         return res.status(405).json({ err: 405 });
     }
 }
